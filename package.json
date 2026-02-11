@@ -1,0 +1,24 @@
+{
+	"name": "ives-test-technique",
+	"version": "1.0.0",
+	"description": "Test technique IVèS",
+	"main": "index.js",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "npx tsc",
+		"start": "node dist/index.js",
+		"test": "tsx tests/index.ts"
+	},
+	"author": "Antoine Kahlouche",
+	"license": "UNLICENSED",
+	"devDependencies": {
+		"@types/node": "^25.2.3",
+		"prettier": "^3.8.1",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"axios": "^1.13.5",
+		"express": "^5.2.1"
+	}
+}
