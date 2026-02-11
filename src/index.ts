@@ -1,8 +1,10 @@
 import express from "express"
 import { createTask } from "./controllers/task/create"
+import { getTask } from "./controllers/task/get"
 import { User } from "./models/User"
 
 const app = express()
+app.use(express.json())
 
 const PORT = 3000
 
@@ -12,6 +14,12 @@ app.post("/v1/task", (req, res) => {
 	const task = createTask(req.body, defaultUser)
 	if (!task) return res.status(400).send("Invalid request body")
 	res.send(task.id)
+})
+
+app.get("/v1/task/:id", (req, res) => {
+	const task = getTask(req.params)
+	if (!task) return res.status(404).send("Task not found")
+	res.json(task)
 })
 
 app.listen(PORT, () => {
