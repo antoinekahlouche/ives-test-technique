@@ -2,6 +2,7 @@ import express from "express"
 import { createTask } from "./controllers/task/create"
 import { deleteTask } from "./controllers/task/delete"
 import { getTask } from "./controllers/task/get"
+import { updateTask } from "./controllers/task/update"
 import { User } from "./models/User"
 
 const app = express()
@@ -19,6 +20,12 @@ app.post("/v1/task", (req, res) => {
 
 app.get("/v1/task/:id", (req, res) => {
 	const task = getTask(req.params)
+	if (!task) return res.status(404).send("Task not found")
+	res.json(task)
+})
+
+app.patch("/v1/task/:id", (req, res) => {
+	const task = updateTask(req.params, req.body)
 	if (!task) return res.status(404).send("Task not found")
 	res.json(task)
 })
