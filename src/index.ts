@@ -4,6 +4,7 @@ import { deleteTask } from "./controllers/task/delete"
 import { getTask } from "./controllers/task/get"
 import { updateTask } from "./controllers/task/update"
 import { authenticate } from "./controllers/middleware/authenticate"
+import { authorize } from "./controllers/oauth/authorize"
 import { User } from "./models/User"
 
 const app = express()
@@ -35,6 +36,17 @@ app.delete("/v1/task/:id", authenticate, (req, res) => {
 	const success = deleteTask(req.params)
 	if (success === undefined) return res.status(404).send("Task not found")
 	res.send(success)
+})
+
+app.get("/v1/authorize", (req, res) => {
+	const result = authorize(req.query)
+	if (!result)
+		return res
+			.status(400)
+			.send(
+				"Invalid request: client_id, redirect_uri, and response_type=code are required",
+			)
+	res.redirect(result.redirectUrl)
 })
 
 app.listen(PORT, () => {
